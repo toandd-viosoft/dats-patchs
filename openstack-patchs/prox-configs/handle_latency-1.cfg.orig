@@ -42,10 +42,10 @@ no-output=no ; disable DPDK debug output
 
 [port 0]
 name=if0
-mac=50:00:00:00:00:01
+mac=hardware
 [port 1]
 name=if1
-mac=50:00:00:00:00:02
+mac=hardware
 
 [defaults]
 mempool size=1875K
