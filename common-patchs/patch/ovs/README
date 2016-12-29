@@ -1,0 +1,6 @@
+This directory is intended to store the following OVS patch:
+	46ab6540af451ecacaecd87cde86264e928a56d8.patch
+
+Use the following command to get this patch:
+	wget https://github.com/openvswitch/ovs/commit/46ab6540af451ecacaecd87cde86264e928a56d8.patch
+

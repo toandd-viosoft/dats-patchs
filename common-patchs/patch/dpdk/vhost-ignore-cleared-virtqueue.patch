@@ -1,0 +1,28 @@
+diff -ru a/lib/librte_vhost/vhost_rxtx.c b/lib/librte_vhost/vhost_rxtx.c
+--- a/lib/librte_vhost/vhost_rxtx.c	2016-02-17 19:07:58.135109596 +0100
++++ b/lib/librte_vhost/vhost_rxtx.c	2016-02-22 12:02:50.189720814 +0100
+@@ -579,6 +579,10 @@
+ 
+ 	/*get the number of free entries in the ring*/
+ 	free_entries = (avail_idx - vq->last_used_idx);
++	if (unlikely(free_entries > vq->size)) {
++		/* Guest probably cleared avail_idx before resetting virtio dev */
++		return 0;
++	}
+ 
+ 	free_entries = RTE_MIN(free_entries, count);
+ 	/* Limit to MAX_PKT_BURST. */
+@@ -612,6 +616,13 @@
+ 		} else {
+ 			vb_offset = vq->vhost_hlen;
+ 			vb_avail = desc->len - vb_offset;
++			if (unlikely(desc->len == 0)) {
++				/*
++				 * Guest probably cleared desc array
++				 * before resetting virtio dev
++				 */
++				break;
++			}
+ 		}
+ 
+ 		/* Buffer address translation. */

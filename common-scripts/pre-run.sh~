@@ -59,6 +59,7 @@ cd libpcap-1.7.4
 ./configure
 make all; make install
 #============================================================
+cd /root
 rm -rf master* PROX* DATS* 91897c6b10ec15a0b4901f5ed764f3239696a18c*
 git clone https://github.com/nvf-crucio/PROX.git
 cd PROX/ 

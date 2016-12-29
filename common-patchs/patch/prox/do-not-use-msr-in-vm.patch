@@ -1,0 +1,61 @@
+diff --git a/parse_utils.c b/parse_utils.c
+--- a/parse_utils.c
++++ b/parse_utils.c
+@@ -518,6 +518,23 @@ void strip_spaces(char *strings[], const uint32_t count)
+ 	}
+ }
+ 
++int is_virtualized(void)
++{
++	char buf[1024]= "/proc/cpuinfo";
++	int virtualized = 0;
++	FILE* fd = fopen(buf, "r");
++	if (fd == NULL) {
++		set_errf("Could not open %s", buf);
++		return -1;
++	}
++	while (fgets(buf, sizeof(buf), fd) != NULL) {
++		if ((strstr(buf, "flags") != NULL) && (strstr(buf, "hypervisor") != NULL))
++			virtualized = 1;
++	}
++	fclose(fd);
++	return virtualized;
++}
++
+ static int get_phys_core(uint32_t *dst, int lcore_id)
+ {
+ 	uint32_t ret;
+diff --git a/parse_utils.h b/parse_utils.h
+--- a/parse_utils.h
++++ b/parse_utils.h
+@@ -96,4 +96,7 @@ void strip_spaces(char *strings[], const uint32_t count);
+ /* Contains error string if any of the above returned an error. */
+ const char* get_parse_err(void);
+ 
++/* Returns true if running from a virtual machine. */
++int is_virtualized(void);
++
+ #endif /* _PARSE_UTILS_H_ */
+diff --git a/display.c b/display.c
+--- a/display.c
++++ b/display.c
+@@ -55,6 +55,7 @@
+ #include "quit.h"
+ #include "prox_port_cfg.h"
+ #include "genl4_bundle.h"
++#include "parse_utils.h"
+ 
+ struct screen_state {
+ 	char chosen_screen;
+@@ -1392,7 +1393,10 @@ void stats_init(void)
+ 	init_l4gen();
+ 	init_rings();
+ 
+-	if ((msr_support = !msr_init()) == 0) {
++	if (is_virtualized()) {
++		plog_info("Not initializing msr as running in a VM\n");
++		msr_support = 0;
++	} else if ((msr_support = !msr_init()) == 0) {
+ 		plog_warn("Failed to open msr pseudo-file (missing msr kernel module?)\n");
+ 	}
+ 
