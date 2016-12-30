@@ -1,6 +1,11 @@
 #! /bin/bash
 
 sudo yum -y -x 'kernel*' update
+sudo subscription-manager repos --enable=rhel-7-server-rpms
+sudo subscription-manager repos --enable=rhel-7-server-extras-rpms
+sudo subscription-manager repos --enable=rhel-7-server-optional-rpms
+sudo subscription-manager repos --enable=rhel-7-server-rh-common-rpms
+sudo yum -y install libpcap-devel ncurses-devel libedit-devel pciutils lua-devel kernel-devel
 #======================================================================
 cd /root
 rm -rf dpdk*
