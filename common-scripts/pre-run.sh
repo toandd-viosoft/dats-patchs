@@ -31,40 +31,6 @@ sudo $RTE_SDK/tools/dpdk_nic_bind.py -b igb_uio 81:00.0
 sudo $RTE_SDK/tools/dpdk_nic_bind.py -b igb_uio 81:00.1
 sudo $RTE_SDK/tools/dpdk_nic_bind.py --status
 cd /root
-#==================Install some packages for PROX========================================
-# 
-mkdir -p /root/white/install_special_package/
-cd /root/white/install_special_package/
-wget ftp://mirror.switch.ch/pool/4/mirror/centos/7.2.1511/os/x86_64/Packages/readline-devel-6.2-9.el7.x86_64.rpm
-rpm -ivh readline-devel-6.2-9.el7.x86_64.rpm
-##Install lua
-curl -R -O http://www.lua.org/ftp/lua-5.3.2.tar.gz
-tar zxf lua-5.3.2.tar.gz
-cd lua-5.3.2
-make linux test
-make install
-cd -
-##Install flex
-wget ftp://ftp.pbone.net/mirror/apt.sw.be/redhat/el5/en/x86_64/buildtools/RPMS/flex-2.5.35-0.8.el5.rfb.x86_64.rpm
-rpm -ivh flex-2.5.35-0.8.el5.rfb.x86_64.rpm
-##Install bison
-wget ftp://ftp.pbone.net/mirror/ftp.scientificlinux.org/linux/scientific/6.4/x86_64/os/Packages/byacc-1.9.20070509-7.el6.x86_64.rpm
-rpm -ivh byacc-1.9.20070509-7.el6.x86_64.rpm
-##Install libedit
-wget http://www.thrysoee.dk/editline/libedit-20150325-3.1.tar.gz
-tar -xvzf libedit-20150325-3.1.tar.gz
-cd libedit-20150325-3.1
-sed "/LIBS/s/ncurses/ncursesw/" -i configure && CPPFLAGS=-I/include/ncursesw
-./configure
-make install
-##Install pcap
-wget http://www.tcpdump.org/release/libpcap-1.7.4.tar.gz
-tar -xf libpcap-1.7.4.tar.gz
-cd libpcap-1.7.4
-./configure
-make all; make install
-#============================================================
-cd /root
 rm -rf master* PROX* DATS* 91897c6b10ec15a0b4901f5ed764f3239696a18c*
 git clone https://github.com/nvf-crucio/PROX.git
 cd PROX/ 
