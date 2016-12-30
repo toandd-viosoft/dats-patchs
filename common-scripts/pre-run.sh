@@ -73,7 +73,7 @@ cd DATS/
 mv tests/prox-configs/ tests/prox-configs.old/
 rm -rf dats-patchs/
 git clone https://github.com/toandd-viosoft/dats-patchs.git
-cp -r dats-patchs/openstack-patchs/prox-configs/ tests/
+cp -r dats-patchs/baremetal-patchs/prox-configs/ tests/
 chmod +x dats.py
 
 sudo sed -i -e 's/GSSAPIAuthentication\ yes/GSSAPIAuthentication\ no/g' /etc/ssh/sshd_config
