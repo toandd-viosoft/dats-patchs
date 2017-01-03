@@ -1,51 +1,6 @@
 #! /bin/bash
 
 sudo yum -y -x 'kernel*' update
-sudo subscription-manager repos --enable=rhel-7-server-rpms
-sudo subscription-manager repos --enable=rhel-7-server-extras-rpms
-sudo subscription-manager repos --enable=rhel-7-server-optional-rpms
-sudo subscription-manager repos --enable=rhel-7-server-rh-common-rpms
-sudo yum -y install libpcap-devel ncurses-devel libedit-devel pciutils lua-devel kernel-devel
-#======================================================================
-cd /root
-rm -rf dpdk*
-wget http://fast.dpdk.org/rel/dpdk-2.2.0.tar.xz
-tar -xvf dpdk-2.2.0.tar.xz
-mv dpdk-2.2.0 dpdk
-cd /root/dpdk
-export RTE_SDK=/root/dpdk
-export RTE_TARGET=x86_64-native-linuxapp-gcc
-export RTE_UNBIND=$RTE_SDK/tools/dpdk_nic_bind.py
-cd $RTE_SDK && make config T=x86_64-native-linuxapp-gcc
-cd $RTE_SDK && make install T=x86_64-native-linuxapp-gcc
-
-sudo modprobe uio
-sudo insmod $RTE_SDK/$RTE_TARGET/kmod/igb_uio.ko
-sudo $RTE_SDK/tools/dpdk_nic_bind.py -u 02:00.0
-sudo $RTE_SDK/tools/dpdk_nic_bind.py -u 02:00.1
-sudo $RTE_SDK/tools/dpdk_nic_bind.py -u 81:00.0
-sudo $RTE_SDK/tools/dpdk_nic_bind.py -u 81:00.1
-sudo $RTE_SDK/tools/dpdk_nic_bind.py -b igb_uio 02:00.0
-sudo $RTE_SDK/tools/dpdk_nic_bind.py -b igb_uio 02:00.1
-sudo $RTE_SDK/tools/dpdk_nic_bind.py -b igb_uio 81:00.0
-sudo $RTE_SDK/tools/dpdk_nic_bind.py -b igb_uio 81:00.1
-sudo $RTE_SDK/tools/dpdk_nic_bind.py --status
-cd /root
-rm -rf master* PROX* DATS* 91897c6b10ec15a0b4901f5ed764f3239696a18c*
-git clone https://github.com/nvf-crucio/PROX.git
-cd PROX/ 
-make
-cd /root
-rm -rf DATS
-wget https://github.com/nvf-crucio/DATS/archive/91897c6b10ec15a0b4901f5ed764f3239696a18c.zip
-unzip 91897c6b10ec15a0b4901f5ed764f3239696a18c.zip
-mv DATS-91897c6b10ec15a0b4901f5ed764f3239696a18c DATS
-cd DATS/
-mv tests/prox-configs/ tests/prox-configs.old/
-rm -rf dats-patchs/
-git clone https://github.com/toandd-viosoft/dats-patchs.git
-cp -r dats-patchs/baremetal-patchs/prox-configs/ tests/
-chmod +x dats.py
 
 sudo sed -i -e 's/GSSAPIAuthentication\ yes/GSSAPIAuthentication\ no/g' /etc/ssh/sshd_config
 sudo sed -i -e 's/PasswordAuthentication\ no/PasswordAuthentication\ yes/g' /etc/ssh/sshd_config
@@ -97,4 +52,10 @@ chmod +x copy_keygen.sh
 sleep 2
 ./copy_keygen.sh 10.64.0.106 root validium2016
 sleep 2
- 
+./copy_keygen.sh 10.64.0.101 root validium2016
+sleep 3
+cd /root
+scp -r root@10.64.0.101:/root/validium.io .
+cd /root/validium.io/crucio-blueprint/crucio-scripts/CRUCIO-SYSTEM-SETUP/host-setup
+./crucio_testcase_1_baremetal.sh
+
