@@ -10,8 +10,8 @@ sudo sed -i -e 's/GSSAPIAuthentication\ yes/GSSAPIAuthentication\ no/g' /etc/ssh
 
 sudo service sshd restart
 
-rm -rf /root/.ssh/id*
-rm -rf /root/.ssh/known_hosts
+#rm -rf /root/.ssh/id*
+#rm -rf /root/.ssh/known_hosts
 cat - >genkey.sh <<'EOF'
 #!/usr/bin/expect
 spawn ssh-keygen
