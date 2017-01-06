@@ -56,6 +56,7 @@ sleep 2
 sleep 3
 cd /root
 scp -r root@10.64.0.101:/root/validium.io .
-cd /root/validium.io/crucio-blueprint/crucio-scripts/CRUCIO-SYSTEM-SETUP/host-setup
-./crucio_testcase_1_baremetal.sh
+cd /root/validium.io/nfv-mano/cloudify-crucio/crucio-scripts/CRUCIO-SYSTEM-SETUP/host-setup
+cd setup_host_environment/
+./setup_host_environment.sh
 
