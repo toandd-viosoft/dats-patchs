@@ -52,7 +52,7 @@ index f835abb..5a56263 100644
      """Execute ssh command"""
      logging.debug("Command to execute over SSH: '%s'", cmd)
 -    ssh_options = ""
-+    ssh_options = "-p " + port
++    ssh_options = "-p " + port + " "
      ssh_options += "-o StrictHostKeyChecking=no "
      ssh_options += "-o UserKnownHostsFile=/dev/null "
      ssh_options += "-o LogLevel=error "
@@ -109,7 +109,7 @@ index f835abb..5a56263 100644
          """Copy a file from the local system to the remote system"""
          logging.debug("Initiating SCP: %s -> %s", local, remote)
 -        cmd = "scp " + local + " " + self._user + "@" + self._ip + ":" + remote
-+        cmd = "scp " + "-P " + self_.port + local + " " + self._user + "@" + self._ip + ":" + remote
++        cmd = "scp " + "-P " + self_.port + " " + local + " " + self._user + "@" + self._ip + ":" + remote
          logging.debug("SCP command: [%s]", cmd)
          running = os.popen(cmd)
          ret = {}
