@@ -260,8 +260,10 @@ chmod +x 01-mount-hugepage.sh
 cd /root
 cat - >run-all-after-vm-booting.sh <<'EOF'
 #!/bin/sh
-#apt-get update
+apt-get update
+apt-get -y install linux-generic linux-headers-generic
 EOF
+
 chmod +x run-all-after-vm-booting.sh
 #==========================================================================
 echo "route add default gw $GW" >> /root/run-all-after-vm-booting.sh

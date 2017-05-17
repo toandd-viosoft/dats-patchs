@@ -44,7 +44,7 @@ until ping -c1 $VM_IP &>/dev/null; do :; done
 echo "VM is up now, but still need to wait for more than 2 minutes"
 # After VM up, it try to connect to default server in 120s (timeout)
 # So we wait 150s > 120s
-sleep 450
+sleep 200
 # Actually we don't need while loop here, but to make sure in some situations
 while true ; do
 ./copy_keygen.sh $VM_IP $USERNAME $PASSWD
