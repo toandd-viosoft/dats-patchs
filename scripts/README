@@ -1,0 +1,163 @@
+# Crucio automated testing scripts
+
+## Overview
+
+This folder contains all automated scripts for all test case on hosts environment
+Basicly, we have 4 types of testing
+ 
+1. PHY-PHY
+
+	================                        ================
+	|              |P0                    P0|              |
+	|              |<---------------------->|              |
+ 	|              |P1                    P1|              |
+	|              |<---------------------->|              |
+	|      TG      |P2                    P2|      SUT     |
+ 	|              |<---------------------->|              |
+	|              |P3                    P3|              |
+	|              |<---------------------->|              |
+ 	|   PHY HOST   |                        |   PHY HOST   |
+   	================                        ================
+
+                                Figure 1
+
+2. PHY-OVS-PHY
+
+        ================                        ================
+	|              |                        |   ________   |
+        |              |P0                    P0|   |      |   |
+        |              |<---------------------->|<->|      |   |
+        |              |P1                    P1|   |      |   |
+        |              |<---------------------->|<->| OvS  |   |
+        |      TG      |P2                    P2|   |      |   |
+        |              |<---------------------->|<->|      |   |
+        |              |P3                    P3|   |      |   |
+        |              |<---------------------->|<->|______|   |
+        |   PHY HOST   |                        |   PHY HOST   |
+        ================                        ================
+
+                                Figure 2
+
+Figure 2 show test setup for PHY-OVS-PHY with four network nic card
+Virtual switching tests attempt to achieve aggregated system throughput of 40 Gbps using 4 ports 
+with OVS-DPDK to compare the following variables configurations:
+- 4 physical cores
+- HyperThreading off ( did not HT on yet)
+
+3. PHY-VM-PHY
+
+        ================                        ===========================
+        |              |                        |   ________   _________  |
+        |              |P0                    P0|   |      |   |       |  |
+        |              |<---------------------->|<->|      |<->|       |  |
+        |              |P1                    P1|   |      |   |       |  |
+        |              |<---------------------->|<->| OvS  |<->| VM    |  |
+        |      TG      |P2                    P2|   |      |   |(Qemu) |  |
+        |              |<---------------------->|<->|      |<->|       |  |
+        |              |P3                    P3|   |      |   |       |  |
+        |              |<---------------------->|<->|______|<->|_______|  |
+        |   PHY HOST   |                        |   PHY HOST              |
+        ================                        ===========================
+
+                                Figure 3
+
+The single VM tests attemp to achieve aggregated system throughput of line rate using 4 ports
+4 dpdk type ports (ports between physical host and Ovs),4 dpdkvhostuser ports (ports between 
+VMs and OvS)
+- Ovs with DPDK
+- Hyperthreading off (did not support to test with HT on yet)
+- Using all CPU cores on socket 0
+
+4. PHY-VM-VM-PHY
+
+        ================                        ===========================
+        |              |                        |   ________   _________  |
+        |              |P0                    P0|   |      |   |       |  |
+        |              |<---------------------->|<->|      |<->|       |  |
+        |              |                        |   |      |   |       |  |
+        |              |                        |   | OvS  |<->| VM1   |  |
+        |      TG      |P1                    P1|   |      |   |(Qemu) |  |
+        |              |<---------------------->|<->|      |<->|       |  |
+        |              |                        |   |      |   |       |  |
+        |              |                        |   |      |<->|_______|  |
+	|              |P2                    P2|   |      |   _________  |
+	|              |<---------------------->|<->|      |<->|       |  |
+	|              |                        |   |      |   |       |  |
+	|              |                        |   |      |<->|  VM2  |  |
+        |              |P3                    P3|   |      |   | (Qemu)|  |  
+	|              |<---------------------->|<->|      |<->|       |  |
+	|              |                        |   |      |   |       |  |
+ 	|              |                        |   |______|<->|_______|  |
+	|              |                        |                         |
+        |   PHY HOST   |                        |   PHY HOST              |
+        ================                        ===========================
+
+                                Figure 3
+
+The two VMs tests use 4 physical ports, 4 dpdk type ports (ports between physical host and Ovs),
+8 dpdkvhostuser ports (ports between VMs and OvS)
+- Ovs with DPDK
+- Hyperthreading off (did not support to test with HT on yet)
+- Using all CPU cores on socket 0
+
+## II) Directory structure
+
+1. setup_host_environment
+
+The first work that we have to do before run any crucio test is setup environment
+To setup environment do below steps on both TG and SUT
+
+	Step 1: Update parameters in "host-setup/env.sh"
+	Step 2: Run "setup_host_environment.sh" in this folder
+
+2. bare_metal_test_scripts
+
+This folder contains some scripts of both TG and SUT to run the first test case (PHY-PHY)
+To run test 
+
+	Step 1: Run setup environment script (setup_host_environment.sh)
+	Step 2: Run command: "source host-setup/env.sh"
+	Step 3: Update test parameters in "dats_env.sh"
+	Step 4: Run "run_bare_metal_test.sh" script in this folder on TG.
+
+2. helper-scripts
+
+Contain some useful scripts such as: identify PCI nic card, nic card numa ...
+
+3. ovs_test_scripts
+
+Contain scripts of both TG and SUT to run the second crucio test case (PHY-OVS-PHY)
+To run test
+
+	Step 1: Run setup environment script (setup_host_environment.sh)
+	Step 2: Run command: "source host-setup/env.sh"
+	Step 3: Access SUT and cd to ovs_test_scripts/sut 
+	Step 4: Update parameters in "flows-to-add" and "ovs-dpdk-args.sh"
+	Step 5: Run "10-start-all.sh" script
+	Step 6: Access TG and cd to ovs_test_scripts/tg
+	Step 7: Update parameters in "dats_env.sh" file
+	Step 8: Run command: "source host-setup/env.sh"
+	Step 9: Run "run_ovs_test.sh" script
+
+*Note:
+Step 1 can be skipt if you already run the first test case before run this test case,
+and SUT must be run (10-start-all.sh) before TG (run_ovs_test.sh) run
+
+4. one_vm_scripts
+
+Contain scripts of both TG and SUT to run the third crucio test case (PHY-VM-PHY)
+To run test
+
+        Step 1: Run setup environment script (setup_host_environment.sh)
+        Step 2: Access SUT and cd to one_vm_scripts/sut
+        Step 3: Update parameters in "flows-to-add","ovs-dpdk-args.sh","vm-args.sh" and "vm-cores.py"
+	Step 4: Run command: "source host-setup/env.sh"
+        Step 5: Run "10-start-all.sh" script
+        Step 6: Access TG and cd to one_vm_scripts/tg
+        Step 7: Update parameters in "dats_env.sh" file
+	Step 8: Run command: "source host-setup/env.sh"
+        Step 9: Run "run_one_vm_test.sh" script
+
+*Note:
+Step 1 can be skipt if you already run the first or second test case before run this test case,
+and SUT must be run (10-start-all.sh) before running TG (run_one_vm_test.sh).

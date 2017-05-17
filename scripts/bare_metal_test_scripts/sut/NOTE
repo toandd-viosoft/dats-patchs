@@ -1,0 +1,2 @@
+Don't need to setup sut in this test case
+Need only to run setup environment scripts before run test.
