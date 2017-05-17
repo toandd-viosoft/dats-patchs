@@ -50,3 +50,7 @@ export MGMT_BR=br1
 export MGMT_IF=`route | grep '^default' | grep -o '[^ ]*$'`
 # Qemu version
 export QEMU_VER=2.3.1
+# VM's parameters
+export VM1_IP=10.64.0.190
+export VM_NETMASK=255.255.255.0
+export GW=10.64.0.1

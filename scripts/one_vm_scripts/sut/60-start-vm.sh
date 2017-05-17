@@ -10,6 +10,7 @@
 ##############################################################################
 
 source ./vm-args.sh
+ip tuntap del $VM_MGMT_TAP mode tap 
 ip tuntap add $VM_MGMT_TAP mode tap || {
 echo "Could not create VM management interface $VM_MGMT_TAP"!
 exit 1

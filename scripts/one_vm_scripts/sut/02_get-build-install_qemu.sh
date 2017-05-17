@@ -15,7 +15,7 @@ wget http://wiki.qemu-project.org/download/qemu-$QEMU_VER.tar.bz2
 tar -jxf qemu-$QEMU_VER.tar.bz2
 ln -snf qemu-$QEMU_VER qemu
 cd qemu/
-./configure --target-list=x86_64-softmmu,arm-linux-user --static --disable-werror --disable-zlib-test
+./configure --target-list=x86_64-softmmu --disable-werror
 make
 make install
 cd -

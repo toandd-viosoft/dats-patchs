@@ -9,6 +9,8 @@
 #All rights reserved.
 ##############################################################################
 
+set -x
+
 source ../../env.sh
 source ./vm-args.sh
 ../../00-after-boot.sh
