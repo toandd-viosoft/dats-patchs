@@ -34,7 +34,8 @@ exit 0
 EOF
 chmod +x copy_keygen.sh
 # Delete old known VM host
-sed -i.bak "/$VM_IP/d" /root/.ssh/known_hosts
+#sed -i.bak "/$VM_IP/d" /root/.ssh/known_hosts
+sed -i "/^$VM1_IP.*$/d" /root/.ssh/known_hosts
 # Checking host until it on
 echo "=====================VM is booting up=============="
 echo " Please wait some minutes (max 10 minutes)"
@@ -43,7 +44,7 @@ until ping -c1 $VM_IP &>/dev/null; do :; done
 echo "VM is up now, but still need to wait for more than 2 minutes"
 # After VM up, it try to connect to default server in 120s (timeout)
 # So we wait 150s > 120s
-sleep 150
+sleep 450
 # Actually we don't need while loop here, but to make sure in some situations
 while true ; do
 ./copy_keygen.sh $VM_IP $USERNAME $PASSWD

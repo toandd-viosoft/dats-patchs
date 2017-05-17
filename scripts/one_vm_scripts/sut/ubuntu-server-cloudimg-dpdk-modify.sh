@@ -36,7 +36,8 @@ fi
 # Force apt to use ipv4 due to build problems on LF POD.
 echo 'Acquire::ForceIPv4 "true";' > /etc/apt/apt.conf.d/99force-ipv4
 
-echo "GRUB_CMDLINE_LINUX="resume=/dev/sda1 default_hugepagesz=$VM_DEF_HUG hugepagesz=$VM_HUGZ hugepages=$VM_HUG isolcpus=$VM_ISOL_CPU rcu_nocbs=$VM_RCU_NOCBS noirqbalance intel_idle.max_cstate=$VM_IDLE_MAX_CSTATE processor.max_cstate=$VM_P_MAX_CSTATE"" >> /etc/default/grub
+sed -i '/^.*GRUB_CMDLINE_LINUX=.*$/d' /etc/default/grub
+echo "GRUB_CMDLINE_LINUX=\"resume=/dev/sda1 default_hugepagesz=$VM_DEF_HUG hugepagesz=$VM_HUGZ hugepages=$VM_HUG isolcpus=$VM_ISOL_CPU rcu_nocbs=$VM_RCU_NOCBS intel_idle.max_cstate=$VM_IDLE_MAX_CSTATE processor.max_cstate=$VM_P_MAX_CSTATE\"" >> /etc/default/grub
 #echo 'vm.nr_hugepages=8912' >> /etc/sysctl.conf
 #echo 'huge /mnt/huge hugetlbfs defaults 0 0' >> vi /etc/fstab
 

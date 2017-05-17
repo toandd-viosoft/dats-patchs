@@ -23,4 +23,6 @@ source ./vm-args.sh
 ./30-start-ovs-vswitchd.sh
 ./40-setup-bridge.sh
 ./50-setup-flows.sh
+# Remove old know_host
+sed -i "/^$VM1_IP.*$/d" /root/.ssh/known_hosts
 ./60-start-vm.sh
