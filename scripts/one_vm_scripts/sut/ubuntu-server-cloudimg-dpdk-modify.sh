@@ -261,13 +261,12 @@ cd /root
 cat - >run-all-after-vm-booting.sh <<'EOF'
 #!/bin/sh
 apt-get update
-apt-get -y install linux-generic linux-headers-generic
 EOF
 
 chmod +x run-all-after-vm-booting.sh
 #==========================================================================
 echo "route add default gw $GW" >> /root/run-all-after-vm-booting.sh
-echo "apt-get -y install linux-generic linux-headers-generic" >> /root/run-all-after-vm-booting.sh
+echo "apt-get -y install linux-generic linux-headers-generic --force-yes" >> /root/run-all-after-vm-booting.sh
 echo "source ~/white/env.sh" >> /root/run-all-after-vm-booting.sh
 echo "cd $RTE_SDK" >> /root/run-all-after-vm-booting.sh
 echo "make install T=$RTE_TARGET" >> /root/run-all-after-vm-booting.sh
