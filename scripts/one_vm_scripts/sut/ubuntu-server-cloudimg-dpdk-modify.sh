@@ -159,7 +159,7 @@ echo "kernel.randomize_va_space = 0" >>  /etc/sysctl.conf
 #sudo apt-get install linux-headers-generic-lts-xenial
 # use bash shell as default shell
 ln -sf /bin/bash /bin/sh
-sudo apt-get -y install yum-utils wget vim tcpdump screen
+sudo apt-get -y install yum-utils wget vim tcpdump screen expect
 sudo apt-get -y install sed gawk grep wget tar gzip bzip2 unzip coreutils pciutils psmisc
 sudo apt-get -y install gcc make git autoconf automake libtool python perl patch
 sudo apt-get -y install net-tools
@@ -274,9 +274,8 @@ EOF
 chmod +x run-all-after-vm-booting.sh
 #==========================================================================
 echo "route add default gw $GW" >> /root/run-all-after-vm-booting.sh
-echo "apt-get update" >> /root/run-all-after-vm-booting.sh
-echo "apt-get install expect" >> /root/run-all-after-vm-booting.sh
-echo "apt-get -y install linux-generic linux-headers-generic --force-yes" >> /root/run-all-after-vm-booting.sh
+#echo "apt-get update" >> /root/run-all-after-vm-booting.sh
+echo "apt-get -y install expect linux-generic linux-headers-generic --force-yes" >> /root/run-all-after-vm-booting.sh
 echo "source ~/white/env.sh" >> /root/run-all-after-vm-booting.sh
 echo "cd $RTE_SDK" >> /root/run-all-after-vm-booting.sh
 echo "make install T=$RTE_TARGET" >> /root/run-all-after-vm-booting.sh

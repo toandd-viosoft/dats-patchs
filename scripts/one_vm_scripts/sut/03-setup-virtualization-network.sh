@@ -11,6 +11,7 @@
 
 virsh net-autostart default --disable
 virsh net-destroy default
+#virsh iface-unbridge $MGMT_BR
 # Determine management interface name
 # If this fails, manually set MGMT_IF
 [ -z "$MGMT_IF" ] && MGMT_IF=$($RTE_BIND --status |sed -n -e '/\*Active\*/ s/^.* if=\([^ ]*\) .*$/\1/p')
