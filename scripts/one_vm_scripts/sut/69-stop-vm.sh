@@ -23,7 +23,7 @@ exit 1
 echo "Could not strictly identify QEMU pid among $qpid, please manually stop VM"!
 exit 1
 }
-ssh $VM_USER@$VM_IP 'poweroff -w -d --no-wall' || {
+ssh $VM_USER@$VM_IP 'poweroff' || {
 echo "Will not be able or allowed to poweroff VM on $VM_IP as $VM_USER"!
 exit 1
 }
