@@ -284,6 +284,7 @@ echo "make" >> /root/run-all-after-vm-booting.sh
 echo "cd ~/white" >> /root/run-all-after-vm-booting.sh
 echo "./00-after-boot.sh" >> /root/run-all-after-vm-booting.sh
 echo "./01-mount-hugepage.sh" >> /root/run-all-after-vm-booting.sh
+echo "cd /root" >> /root/run-all-after-vm-booting.sh
 echo "./genkey.sh" >> /root/run-all-after-vm-booting.sh
 echo "sleep 2" >> /root/run-all-after-vm-booting.sh
 echo "cd /root" >> /root/run-all-after-vm-booting.sh
