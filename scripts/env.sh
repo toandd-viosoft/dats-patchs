@@ -47,7 +47,8 @@ export RTE_BIND=$RTE_SDK/tools/dpdk_nic_bind.py
 # Note that br1 is external dridge, br0 is internal interface \
 # which was not exposed to user (br0 is ovs bridge)
 export MGMT_BR=br1
-export MGMT_IF=`route | grep '^default' | grep -o '[^ ]*$'`
+#export MGMT_IF=`route | grep '^default' | grep -o '[^ ]*$'`
+export MGMT_IF=$($RTE_BIND --status |sed -n -e '/\*Active\*/ s/^.* if=\([^ ]*\) .*$/\1/p')
 # Qemu version
 export QEMU_VER=2.3.1                                      #QEMU_VER
 # VM's parameters
