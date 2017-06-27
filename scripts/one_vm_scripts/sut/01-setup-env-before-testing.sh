@@ -22,7 +22,7 @@ fi
 cd $path/../.. && ./00-after-boot.sh
 
 cd $path
-#./02_get-build-install_qemu.sh
+./02_get-build-install_qemu.sh
 ./03-setup-virtualization-network.sh
 #./04-restart-machine-to-verify.sh
 ./05-verify-mgmtif-attached.sh
