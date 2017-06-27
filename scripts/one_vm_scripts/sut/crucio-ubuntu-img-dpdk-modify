@@ -95,7 +95,7 @@ modify() {
         /etc/resolv.conf | awk '{ print $2 '})
 
     # prevent init scripts from running during install
-    echo $'#!/bin/sh\nexit 101' >$mountdir/usr/sbin/policy-rc.d
+    echo $'#!/bin/bash\nexit 101' >$mountdir/usr/sbin/policy-rc.d
     chmod a+x $mountdir/usr/sbin/policy-rc.d
 
     chroot $mountdir /$(basename $cmd) $nameserver_ip

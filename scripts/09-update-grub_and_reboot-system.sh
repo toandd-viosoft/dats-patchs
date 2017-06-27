@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ##############################################################################
 #Author: ToanDD
@@ -57,7 +57,7 @@ echo 1 > /opt/flag.txt
 cd $path
 
 cat - >setup_env_after_rebooting.sh <<'EOF'
-#!/bin/sh -e
+#!/bin/bash -e
 # echo "Running" > /root/test_local.txt
 old_state=`cat /opt/flag.txt`
 if [ $old_state = 1 ]

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ##############################################################################
 # Copyright (c) 2015 Ericsson AB and others.
 #
@@ -241,7 +241,7 @@ cat - >ports-to-bind <<EOF
 EOF
 
 cat - >00-after-boot.sh <<'EOF'
-#!/bin/sh
+#!/bin/bash
 lsmod |grep -w "^uio" >/dev/null 2>&1 || modprobe uio
 lsmod |grep -w "^igb_uio" >/dev/null 2>&1 || insmod $RTE_SDK/$RTE_TARGET/kmod/igb_uio.ko
 bound=$($RTE_BIND --status |sed -n -e '/drv=igb_uio/ s/^\([[:xdigit:]:.]*\).*$/\1/p')
@@ -251,7 +251,7 @@ $RTE_BIND --status
 EOF
 
 cat - >01-mount-hugepage.sh <<'EOF'
-#!/bin/sh
+#!/bin/bash
 mkdir -p /mnt/huge
 umount `awk '/hugetlbfs/ { print $2 }' /proc/mounts` >/dev/null 2>&1
 echo 4096 > /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages
@@ -267,7 +267,7 @@ chmod +x 01-mount-hugepage.sh
 # Run all after VM booting
 cd /root
 cat - >run-all-after-vm-booting.sh <<'EOF'
-#!/bin/sh
+#!/bin/bash
 #apt-get update
 EOF
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #Author: ToanDD
 #Date created: 20/01/2017
