@@ -31,6 +31,18 @@ black_pci=(`ethtool -i $NET | grep bus-info | cut -d':' -f3-5`)
 pci_port_type=(`lspci | grep Ether | grep $PCI_TYPE | cut -d' ' -f1`)
 num_pci_ports=${#pci_port_type[@]}
 
+#Mount hugepage if OS is debean
+if [ -f /etc/network/interfaces ]
+then
+[ -d /dev/hugepages ] || mkdir -p /dev/hugepages
+umount `awk '/hugetlbfs/ { print $2 }' /proc/mounts` >/dev/null 2>&1
+echo 16 > /sys/devices/system/node/node0/hugepages/hugepages-1048576kB/nr_hugepages
+echo 16 > /sys/devices/system/node/node1/hugepages/hugepages-1048576kB/nr_hugepages
+echo 4096 > /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages
+echo 4096 > /sys/devices/system/node/node1/hugepages/hugepages-2048kB/nr_hugepages
+mount -t hugetlbfs nodev /dev/hugepages
+fi
+
 #Binding nic cards to dpdk driver, checking whether server has enough pci ports or not
 if [ $num_pci_ports -ge $NUMB_OF_PCI_PORTS ]
 then
