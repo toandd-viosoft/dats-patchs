@@ -19,6 +19,11 @@ source ./vm-args.sh
 ./90-stop-all.sh
 ./01-setup-env-before-testing.sh
 ./crucio-ubuntu-img-dpdk-modify ubuntu-server-cloudimg-dpdk-modify.sh
+# Hot fix for ovs issue when run with cloudify
+./29-stop-ovsdb-server.sh
+./39-stop-ovs-vswitchd.sh
+pkill -9 ovsdb-server
+
 ./20-start-ovsdb-server.sh
 ./30-start-ovs-vswitchd.sh
 ./40-setup-bridge.sh
