@@ -36,6 +36,7 @@ chmod +x copy_keygen.sh
 # Delete old known VM host
 #sed -i.bak "/$VM_IP/d" /root/.ssh/known_hosts
 sed -i "/^$VM1_IP.*$/d" /root/.ssh/known_hosts
+ssh-keygen -f "/root/.ssh/known_hosts" -R $VM1_IP
 # Checking host until it on
 echo "=====================VM is booting up=============="
 echo " Please wait some minutes (max 10 minutes)"
