@@ -18,7 +18,8 @@ source ./vm-args.sh
 ./del_tap_if_exists.sh
 ./90-stop-all.sh
 ./01-setup-env-before-testing.sh
-./crucio-ubuntu-img-dpdk-modify ubuntu-server-cloudimg-dpdk-modify.sh
+# Save time deploy server when run the second time
+#./crucio-ubuntu-img-dpdk-modify ubuntu-server-cloudimg-dpdk-modify.sh
 ./20-start-ovsdb-server.sh
 ./30-start-ovs-vswitchd.sh
 ./40-setup-bridge.sh
