@@ -15,12 +15,12 @@ source ../../env.sh
 source ./vm-args.sh
 ../../00-after-boot.sh
 # Save time deploy server when run the second time
-# [ -f /home/crucio-trusty-server.qcow2 ] && rm -rf /home/crucio-trusty-server.qcow2
+[ -f /home/crucio-trusty-server.qcow2 ] && rm -rf /home/crucio-trusty-server.qcow2
 ./del_tap_if_exists.sh
 ./90-stop-all.sh
 ./01-setup-env-before-testing.sh
 # Save time deploy server when run the second time
-# ./crucio-ubuntu-img-dpdk-modify ubuntu-server-cloudimg-dpdk-modify.sh
+./crucio-ubuntu-img-dpdk-modify ubuntu-server-cloudimg-dpdk-modify.sh
 ./20-start-ovsdb-server.sh
 ./30-start-ovs-vswitchd.sh
 ./40-setup-bridge.sh
