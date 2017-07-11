@@ -23,9 +23,12 @@ git checkout a52953c4a92ecfcfdd06fc01fce42b57f998cb10
 cd -
 cp -a /opt/crucio/PROX/helper-scripts/start_vm.py _62-start-vm-helper.py
 chmod +x _62-start-vm-helper.py
+cur_path="$(pwd)"
 cd /opt/dats-patchs
 git checkout master
 patch -p1 </opt/dats-patchs/common-patchs/patch/prox/start-vm-helper.patch
+git checkout crucio-scripts
+cd $cur_path
 
 # Get management interface
 
