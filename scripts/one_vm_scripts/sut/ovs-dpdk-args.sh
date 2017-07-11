@@ -9,6 +9,6 @@
 ##############################################################################
 
 OVS_DPDK_ARGS="-c 0x1 -n 4 --socket-mem 2048,2048"
-OVS_PMD_CPU_MASK=180006
+OVS_PMD_CPU_MASK=1E
 OVS_MAX_IDLE=30000
 OVS_LOG_FILE=/root/white/ovs.log
