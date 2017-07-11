@@ -18,12 +18,15 @@ qemu-img info $VM_HDD
 $RTE_SDK/tools/cpu_layout.py
 
 #  Copy and adjust Python helper script, used to start VM, from PROX
-cd /root/crucio/PROX
+cd /opt/crucio/PROX
 git checkout a52953c4a92ecfcfdd06fc01fce42b57f998cb10
 cd -
-cp -a /root/crucio/PROX/helper-scripts/start_vm.py _62-start-vm-helper.py
+cp -a /opt/crucio/PROX/helper-scripts/start_vm.py _62-start-vm-helper.py
 chmod +x _62-start-vm-helper.py
-patch -p1 </root/pre-config/dats-patchs/common-patchs/patch/prox/start-vm-helper.patch
+cd /opt/dats-patchs
+git checkout master
+patch -p1 </opt/dats-patchs/common-patchs/patch/prox/start-vm-helper.patch
+
 # Get management interface
 
 # If this fails, manually set MGMT_IF
