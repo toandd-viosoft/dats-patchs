@@ -35,7 +35,7 @@ then
     echo "export OVS_SOCKDIR=/usr/local/var/run/openvswitch" >> /root/.bashrc
     echo "export OVS_DBSOCK=$OVS_SOCKDIR/db.sock" >> /root/.bashrc
 
-    cd /root/crucio
+    cd /opt/crucio
     #Get OVS patch from GitHub
     mkdir -p ovs-dpdk/patch
     cd ovs-dpdk/patch
@@ -63,7 +63,7 @@ then
         sed -i -e "/$l0/{N;s/^.*\$/$l1\\n$l2\\n$l3/}" lib/netdev-dpdk.c
 
         #Fix destroy_device() function, using OVS patch from https://github.com/openvswitch/ovs/commit/46ab654
-        patch -p1 < /root/crucio/ovs-dpdk/patch/46ab6540af451ecacaecd87cde86264e928a56d8.patch
+        patch -p1 < /opt/crucio/ovs-dpdk/patch/46ab6540af451ecacaecd87cde86264e928a56d8.patch
     fi
 
     #Build OVS
