@@ -23,14 +23,17 @@ IP=${ipaddr[0]}
 # Resetting state for the system
 echo 0 > /opt/flag.txt
 #Getting PROX's source code
-cd /root/crucio
+cd /opt/crucio
 rm -rf PROX*
 git clone https://github.com/nvf-crucio/PROX
 cd PROX
 git checkout $PROX_VER
 if [ $PROX_VER = 85806f9431cc2d70ad5a82d3d07eff78af3486ea ]
 then
-    patch -p1 < /root/pre-config/dats-patchs/common-patchs/patch/prox/more-rxtx-desc-and-larger-mbuf-cache.patch
+    cd /opt/dats-patchs
+    git checkout master
+    patch -p1 < /opt/dats-patchs/common-patchs/patch/prox/more-rxtx-desc-and-larger-mbuf-cache.patch
+    cd -
 fi
 # Building PROX
 make
@@ -39,7 +42,7 @@ if [ $IP = $TG_IP ]
 then
     echo "Getting DATS for TG"
     # Get DATS
-    cd /root/crucio
+    cd /opt/crucio
     rm -rf DATS*
     git clone https://github.com/nvf-crucio/DATS
     cd DATS
