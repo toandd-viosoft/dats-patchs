@@ -21,8 +21,8 @@ export PROX_VER=85806f9431cc2d70ad5a82d3d07eff78af3486ea    #PROX_VER
 export DATS_VER=f1da5139b2c1a9134abfb6f304c980cd445c9a38
 export OvS_VER=2.4.0                                        #OvS_VER
 # OvS dpdk arguments
-export OVS_DPDK_ARGS="-c 0x1 -n 4 --socket-mem 4096,0"
-export OVS_PMD_CPU_MASK=1E
+export OVS_DPDK_ARGS="-c 0x1E -n 4 --socket-mem 4096,4096"
+export OVS_PMD_CPU_MASK=78001E
 export OVS_MAX_IDLE=30000
 export OVS_LOG_FILE=/root/white/virt/ovs.log
 # PCI type and number of PCI ports
